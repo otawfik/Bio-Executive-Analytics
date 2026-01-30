@@ -1,0 +1,7 @@
+{
+  "name": "Bio-Executive Analytics Platform",
+  "description": "A high-performance business analytics dashboard for elite health metrics, featuring AI-driven performance insights and an AI-powered fitness content studio.",
+  "requestFramePermissions": [
+    "camera"
+  ]
+}
