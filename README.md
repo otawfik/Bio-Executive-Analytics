@@ -1,20 +1,40 @@
-<div align="center">
-<img width="1200" height="475" alt="GHBanner" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
-</div>
+# Bio-Executive Analytics
 
-# Run and deploy your AI Studio app
+[![build](https://github.com/otawfik/Bio-Executive-Analytics/actions/workflows/ci.yml/badge.svg)](https://github.com/otawfik/Bio-Executive-Analytics/actions/workflows/ci.yml)
 
-This contains everything you need to run your app locally.
+**A performance dashboard for an athlete's wearable data, with AI-written insights and an AI
+image studio for training content.**
 
-View your app in AI Studio: https://ai.studio/apps/drive/1w6hd_Oj6sf7ON1M2PJDf3Bvj0UJ_UJs-
+![Dashboard: strain, recovery, sleep and HRV, with strain-vs-recovery and sleep-consistency charts](docs/dashboard.jpg)
 
-## Run Locally
+*The dashboard runs on built-in sample data for one athlete.*
 
-**Prerequisites:**  Node.js
+## What it does
 
+- **Analytics dashboard.** Daily strain, recovery, sleep score and HRV at a glance; a
+  strain-vs-recovery correlation chart and a sleep-consistency index across the week.
+- **Performance intelligence.** The week's metrics go to `gemini-3-flash-preview` with a JSON
+  response schema, and come back as structured, actionable insights and a 48-hour forecast.
+- **Content AI studio.** Upload a training photo and describe an edit ("clean background",
+  "cinematic retro filter"); `gemini-2.5-flash-image` returns the edited image.
+- **Raw telemetry.** The underlying data, for anyone who wants the numbers.
 
-1. Install dependencies:
-   `npm install`
-2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
-3. Run the app:
-   `npm run dev`
+**The API key never reaches the browser.** Every Gemini call goes through one server
+function, `api/gemini.ts`, which holds `GEMINI_API_KEY` and only lets this app's models through.
+The browser calls `/api/gemini` (`services/geminiClient.ts`).
+
+## Run locally
+
+```bash
+npm install
+echo "GEMINI_API_KEY=your-key" > .env.local   # never committed
+npm run dev
+```
+
+In development Vite answers `/api/gemini` with the same server function, so there's nothing
+else to run. Deploys to Vercel as-is; set `GEMINI_API_KEY` in the project's environment variables
+and give the key a quota in Google AI Studio, since the endpoint is public.
+
+## Stack
+
+React 19 · TypeScript · Vite · Recharts · Tailwind CSS · Google Gemini API · Vercel Functions
