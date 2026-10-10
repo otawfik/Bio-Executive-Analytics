@@ -2,6 +2,8 @@
 
 [![build](https://github.com/otawfik/Bio-Executive-Analytics/actions/workflows/ci.yml/badge.svg)](https://github.com/otawfik/Bio-Executive-Analytics/actions/workflows/ci.yml)
 
+**[▶ Live demo](https://bio-executive-analytics.vercel.app)**
+
 **A performance dashboard for an athlete's wearable data, with AI-written insights and an AI
 image studio for training content.**
 
