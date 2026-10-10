@@ -1,11 +1,10 @@
+import { generateContent } from "./geminiClient";
 
-import { GoogleGenAI, Type } from "@google/genai";
 import { MetricData } from "../types";
 
-const ai = new GoogleGenAI({ apiKey: process.env.API_KEY! });
 
 export const getHealthInsights = async (data: MetricData[]) => {
-  const response = await ai.models.generateContent({
+  const response = await generateContent({
     model: "gemini-3-flash-preview",
     contents: `Analyze this week's physiological health data for a high-performance athlete. 
     Data: ${JSON.stringify(data)}
@@ -13,14 +12,14 @@ export const getHealthInsights = async (data: MetricData[]) => {
     config: {
       responseMimeType: "application/json",
       responseSchema: {
-        type: Type.OBJECT,
+        type: "OBJECT",
         properties: {
-          summary: { type: Type.STRING },
+          summary: { type: "STRING" },
           recommendations: {
-            type: Type.ARRAY,
-            items: { type: Type.STRING }
+            type: "ARRAY",
+            items: { type: "STRING" }
           },
-          performanceForecast: { type: Type.STRING }
+          performanceForecast: { type: "STRING" }
         },
         required: ["summary", "recommendations", "performanceForecast"]
       }
@@ -42,7 +41,7 @@ export const editStudioImage = async (base64Image: string, prompt: string) => {
     text: `Edit this fitness image: ${prompt}. Return ONLY the edited image.`
   };
 
-  const response = await ai.models.generateContent({
+  const response = await generateContent({
     model: "gemini-2.5-flash-image",
     contents: { parts: [imagePart, textPart] }
   });
